@@ -36,7 +36,7 @@ export default async function handler(req, res) {
 
     const hashedPassword = await hashPasswords(password);
 
-    const newUser = new User.create({
+    const newUser = await User.create({
         email,
         password: hashedPassword
     }); 
