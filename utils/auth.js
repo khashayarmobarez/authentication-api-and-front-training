@@ -1,4 +1,4 @@
-const { hash } = require("bcryptjs")
+const { hash, compare } = require("bcryptjs")
 
 const hashPasswords = async (password) => {
     const hashedPassword = await hash(password, 10)
@@ -6,7 +6,7 @@ const hashPasswords = async (password) => {
 }
 
 const verifyPassword = async (password, hashedPassword) => {
-    const isMatch = await bcrypt.compare(password, hashedPassword)
+    const isMatch = await compare(password, hashedPassword)
     return isMatch;
 }
 
