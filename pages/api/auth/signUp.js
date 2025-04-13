@@ -33,7 +33,7 @@ export default async function handler(req, res) {
     if (userExistance) {
         return res.status(409).json({status: 'failed', message: 'User already exists'});
     }
-
+ 
     const hashedPassword = await hashPasswords(password);
 
     const newUser = await User.create({
