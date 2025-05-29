@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 function Login() {
 
@@ -7,6 +7,21 @@ function Login() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    useEffect(() => {
+        fetch('/api/user')
+        .then((res) => res.json())
+        .then((data) => {
+            if(data.status === 'success') {
+                // router.replace('/dashboard');
+                // the below button is better because it stop any error accuring
+                window.location.href = "/dashboard"
+            } else {
+                console.log('User not logged in');
+            }
+        })
+    }
+    ,[])
 
     const LoginHandler = async () => {
         try {
