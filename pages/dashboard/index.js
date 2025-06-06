@@ -18,8 +18,8 @@ export async function getServerSideProps(context) {
 
     const result = verifyToken(token, secretKey)
 
-    if(!result) return {
-        redirect: { destination: '/login', permanent: false}
+    if(!result || result.status === 'failed') return {
+        redirect: { destination: '/login', permanent: false }
     }
 
     return {props: { result } }
