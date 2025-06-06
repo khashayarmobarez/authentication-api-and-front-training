@@ -1,3 +1,5 @@
+import { verifyToken } from '@/utils/auth';
+import { redirect } from 'next/navigation';
 import React from 'react';
 
 const Dashboard = () => {
@@ -12,7 +14,13 @@ export default Dashboard;
 
 export async function getServerSideProps(context) {
     const { token } = context.req.cookies;
-    console.log(token)
+    const secretKey = process.env.SECRET_KEY
 
-    return {props: {} }
+    const result = verifyToken(token, secretKey)
+
+    if(!result) return {
+        redirect: { destination: '/login', permanent: false}
+    }
+
+    return {props: { result } }
 }
