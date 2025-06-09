@@ -1,5 +1,5 @@
 import User from "@/models/User";
-import { verifyToken } from "@/utils/auth";
+import { verifyToken, verifyPassword } from "@/utils/auth";
 import connectDB from "@/utils/connectDB";
 
 export default async function handler(req, res) {
@@ -32,6 +32,12 @@ export default async function handler(req, res) {
 
     if(!user) {
         return res.status(404).json({ status: 'failed', message: 'User not found' });
+    }
+
+    const isValid = await user.verifyPassword(password, user.password); 
+
+    if (!isValid) {
+        return res.status(401).json({ status: 'failed', message: 'Invalid password' });
     }
 
 }
