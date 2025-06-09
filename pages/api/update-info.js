@@ -40,4 +40,9 @@ export default async function handler(req, res) {
         return res.status(401).json({ status: 'failed', message: 'Invalid password' });
     }
 
+    user.name = name;
+    user.lastName = lastName;
+    await user.save();
+    return res.status(200).json({ status: 'success', message: 'User information updated successfully' });
+
 }
