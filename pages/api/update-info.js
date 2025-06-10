@@ -30,11 +30,17 @@ export default async function handler(req, res) {
 
     const user = await User.findOne({ email: result.email });
 
+    console.log(user);
+
     if(!user) {
         return res.status(404).json({ status: 'failed', message: 'User not found' });
     }
 
-    const isValid = await user.verifyPassword(password, user.password); 
+    if (!user.password) {
+        return res.status(404).json({ status: 'failed', message: 'password missing' });
+    }
+
+    const isValid = await verifyPassword(password, user.password); 
 
     if (!isValid) {
         return res.status(401).json({ status: 'failed', message: 'Invalid password' });
